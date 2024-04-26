@@ -482,8 +482,8 @@ shoulder_od=(Cone_Radius-Shoulder_Inset)*2;
 shoulder_id=shoulder_od - (Wall_Thickness*2);
 n_bolts=4;
 //intersection(){
-difference(){
-//    union(){
+//difference(){
+    union(){
             // Original Nosecone
             scale([Base_Units, Base_Units, Base_Units]) {
               solidLength = FullLen - domain[0];
@@ -492,13 +492,17 @@ difference(){
               layerGap = 25.4 / Base_Units; // == 1 inch
 
               echo(str("NOSE CONE: ", cone_name, "   R=", R, ", L=", L, ", Layers=", nLayers));
-              for (layer = [0:3]) {
+              for (layer = [3:3]) {
                 translate([0,0,(nLayers - layer) * layerGap]) {
                   doNoseCone(layer, (layer - 1) * layerHeight + domain[0], layer * layerHeight + domain[0]);
                 }
               }
             }
-            translate( [0, 0, 54 ] )inset_series( radius=50, n=4, inset_d=5 );
+            difference(){
+                translate([0,0,10])cylinder( h=10, r=54.8, $fn=120  );
+                translate( [0,0,5])cylinder( h=20, r=2.1, $fn=30 );
+            }
+            //translate( [0, 0, 54 ] )inset_series( radius=50, n=4, inset_d=5 );
         }
     
 
